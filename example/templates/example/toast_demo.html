@@ -1,0 +1,27 @@
+{% extends 'bootstrap4/bootstrap4.html' %}
+{% load bootstrap4 %}
+
+{% block bootstrap4_extra_head %}
+  {{ block.super }}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+{% endblock %}
+
+{% block bootstrap4_content %}
+  <div class="container" style="padding-top: 2em;">
+      <h1>Toast Demo</h1>
+      {% bootstrap_messages %}
+      <form action="{% url 'asyncio-sleep-task' %}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+        <input type="submit" value="Submit">
+        {% endbuttons %}
+      </form>
+  </div>
+{% endblock %}
+
+{% block bootstrap4_extra_script %}
+  {% load static %}
+  <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+  <script src="{% static "toasts/js/dj-asgi-utils.toast.js" %}"></script>
+{% endblock %}
