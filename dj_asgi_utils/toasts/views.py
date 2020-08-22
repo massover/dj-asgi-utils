@@ -6,7 +6,7 @@ from dj_asgi_utils.toasts.serializers import ToastSerializer
 
 from ..core.responses import AysncStreamingHttpResponse
 from .models import Toast
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwner
 from .streams import toast_stream
 
 
@@ -14,7 +14,7 @@ class ToastViewSet(GenericViewSet):
     queryset = Toast.objects.all()
     serializer_class = ToastSerializer
     permission_classes = [
-        IsOwnerOrReadOnly,
+        IsOwner,
     ]
 
     @action(detail=True, methods=["post"])
