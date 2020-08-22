@@ -34,7 +34,7 @@ Run it
 If you're a django dev, you might expect `./manage.py runserver` to include the ability to run an asgi devserver. `runserver` by 
 default uses the stdlib WSGIServer. Currently there is no equivalent ASGI Server in the stdlib. At a high level, I had no issues 
 running `uvicorn myproject.asgi:application` for local development, but then I realized that I wasn’t getting hot reloading. 
-That’s easy enough to fix, and then I realized my migrations were out of date, also easy. Then I noticed I wasn’t seeing system checks. 
+That’s easy enough to fix, and then I realized my migrations were out of date, also easy. Then I noticed I wasn’t seeing system checks or getting static files. 
 These are all small things but they normally just work and they don’t for ASGI.
 
 ## SSE
