@@ -5,7 +5,13 @@ from django.db import models
 
 @sync_to_async
 def async_create_toast(message, user_id):
-    return Toast.objects.create(message=message, user_id=user_id)
+    obj = Toast.objects.create(message=message, user_id=user_id)
+    return obj
+
+
+def create_toast(message, user_id):
+    obj = Toast.objects.create(message=message, user_id=user_id)
+    return obj
 
 
 class Toast(models.Model):

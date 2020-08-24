@@ -111,4 +111,79 @@ application = get_asgi_application()
 
 ## Toasts
 
-WIP
+Real time toast notifications using SSE
+
+Uses:
+
+- [notyfjs](https://github.com/caroso1222/notyf) to not reinvent toast messages.
+- [djangorestframework](https://www.django-rest-framework.org/) because it's more fun to code an api with drf than without it.
+
+### Quickstart
+
+Add the toasts application to your `INSTALLED_APPS`
+
+```python
+INSTALLED_APPS = [
+    'dj_asgi_utils.toasts',
+]
+```
+
+Add `dj_asgi_utils.toasts.middleware.ToastMiddleware` to your `MIDDLEWARE`
+
+```python
+MIDDLEWARE = [
+    ...,
+    "dj_asgi_utils.toasts.middleware.ToastMiddleware",
+]
+```
+
+Run your migrations
+
+```bash
+./manage.py migrate
+```
+
+Open your browser to your admin, eg
+
+```
+open http://localhost:8000/admin/
+```
+
+While the admin is open in the browser, load the shell, and create a toast. You should see the toast flash in the admin!
+
+```python
+from django.contrib.auth import get_user_model
+from dj_asgi_utils.toasts.models import create_toast
+
+User = get_user_model()
+user_id = User.objects.get()
+# Note, we create in the shell with the sync `create_toast` function
+# You may use be using `async_create_toast` in an async view.
+create_toast("Hello world!", user_id)
+```
+
+### Toasts without middleware
+
+If you need finer control on which views see the toast, you can update your templates to include the js and css.
+
+The following extends the default `base_site.html` to work with toasts without using the middleware.
+
+```html
+{% extends 'admin/base_site.html' %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "toasts/css/notyf.min.css" %}">
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src="{% static "toasts/js/notyf.min.js" %}></static>
+
+{% endblock %}
+
+{% block footer %}
+    {% csrf_token %}
+    <script src="{% static "toasts/js/dj-asgi-utils.toast.js" %}></static>
+{% endblock %}
+```

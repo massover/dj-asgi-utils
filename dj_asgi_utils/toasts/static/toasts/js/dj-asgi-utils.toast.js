@@ -1,6 +1,7 @@
 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 const evtSource = new EventSource("/api/v1/toast/stream/");
 let ids = [];
+console.log("HELLO WORLD!!");
 const notyf = new Notyf({duration: 0, dismissible: true});
 evtSource.addEventListener("toast", function (event) {
   const toasts = JSON.parse(event.data);
