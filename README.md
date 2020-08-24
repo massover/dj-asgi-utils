@@ -156,7 +156,7 @@ from django.contrib.auth import get_user_model
 from dj_asgi_utils.toasts.models import create_toast
 
 User = get_user_model()
-user_id = User.objects.get()
+user_id = User.objects.get().id
 # Note, we create in the shell with the sync `create_toast` function
 # You may use be using `async_create_toast` in an async view.
 create_toast("Hello world!", user_id)
